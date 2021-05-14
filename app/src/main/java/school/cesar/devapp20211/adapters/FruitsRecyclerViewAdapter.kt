@@ -20,10 +20,14 @@ class FruitsRecyclerViewAdapter (private val context: Context, private val fruit
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_fruit, parent, false)
         val binding = RowFruitBinding.bind(view)
+        val viewHolder = ViewHolder(binding)
 
-        //Implement callback click listener
+        viewHolder.itemView.setOnClickListener {
+            val fruit = fruits[viewHolder.adapterPosition]
+            callback(fruit)
+        }
 
-        return ViewHolder(binding)
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

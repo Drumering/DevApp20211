@@ -3,4 +3,7 @@
     <string name="search_hint">Search</string>
     <string name="placeholder_benefits_description">Description fruit benefits</string>
     <string name="placeholder_fruit_name">Fruit name</string>
+    <string name="insert_the_fruit_name">Insert the fruit name</string>
+    <string name="describe_the_benefits">Describe the benefits</string>
+    <string name="description_content_fruit_image">description_content_fruit_image</string>
 </resources>
