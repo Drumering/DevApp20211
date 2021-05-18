@@ -1,11 +1,12 @@
 package school.cesar.devapp20211.activities
 
 import android.content.Intent
+import android.content.res.TypedArray
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import school.cesar.devapp20211.R
 import school.cesar.devapp20211.adapters.FruitsRecyclerViewAdapter
 import school.cesar.devapp20211.databinding.ActivityMainBinding
 import school.cesar.devapp20211.models.Fruit
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val REQUEST_CODE = 1
+        const val EXTRA_FRUIT = "EXTRA_FRUIT"
+        var fruitsImages: TypedArray? = null
     }
 
     private val fruitAdapter = FruitsRecyclerViewAdapter(this, fruits, this::onItemClickListener)
@@ -30,12 +33,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        fruitsImages = resources.obtainTypedArray(R.array.fruits)
+
         binding.recyclerViewFruits.adapter = fruitAdapter
         binding.recyclerViewFruits.layoutManager = LinearLayoutManager(this)
     }
 
     private fun onItemClickListener(fruit: Fruit) {
-        Toast.makeText(this, fruit.name, Toast.LENGTH_SHORT).show()
+        val fruitDesc = Intent(this, DescriptionFruitsActivity::class.java)
+        fruitDesc.putExtra(EXTRA_FRUIT, fruit)
+        startActivity(fruitDesc)
     }
 
     fun onClickAddFruits(view: View) {
