@@ -50,7 +50,7 @@
             android:maxLength="30"
             android:minWidth="200dp"
             android:maxWidth="300dp"
-            android:imeOptions="actionDone"/>
+            android:imeOptions="actionNext"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="@string/describe_the_benefits"
-            android:imeOptions="actionDone"
+            android:imeOptions="actionNext"
             android:maxWidth="300dp"
             android:maxLength="148"
             android:maxLines="5"
@@ -87,7 +87,7 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/horirontal_fruits_placeholder" />
+        app:srcCompat="@drawable/horizontal_fruits_placeholder" />
 
     <ImageView
         android:id="@+id/imageView3"

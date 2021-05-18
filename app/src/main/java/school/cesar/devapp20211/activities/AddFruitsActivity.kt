@@ -18,6 +18,7 @@ class AddFruitsActivity : AppCompatActivity() {
     */
     private lateinit var binding : ActivityAddFruitsBinding
     private lateinit var fruit : Fruit
+    private lateinit var uri : String
 
     companion object {
         const val REQUEST_CODE = 3
@@ -38,17 +39,18 @@ class AddFruitsActivity : AppCompatActivity() {
 
         binding.btnSave.setOnClickListener {
             val returnIntent = Intent()
-            fruit = Fruit(binding.etName.text.toString(), binding.etBenefits.text.toString(), 0)
+            fruit = Fruit(binding.etName.text.toString(), binding.etBenefits.text.toString(), uri)
             returnIntent.putExtra(MainActivity.EXTRA_FRUIT, fruit)
-            setResult(MainActivity.REQUEST_CODE, returnIntent)
+            setResult(Activity.RESULT_OK, returnIntent)
             finish()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == AddFruitsActivity.REQUEST_CODE) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             binding.imgvAddFruitImage.setImageURI(data?.data)
+            uri = data?.data.toString()
         }
     }
 
@@ -65,8 +67,8 @@ class AddFruitsActivity : AppCompatActivity() {
     }
 
     private fun getImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
-        startActivityForResult(intent, AddFruitsActivity.REQUEST_CODE)
+        startActivityForResult(intent, REQUEST_CODE)
     }
 }

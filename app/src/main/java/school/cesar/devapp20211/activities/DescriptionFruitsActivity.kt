@@ -1,10 +1,12 @@
 package school.cesar.devapp20211.activities
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import school.cesar.devapp20211.R
 import school.cesar.devapp20211.databinding.ActivityDescriptionFruitsBinding
 import school.cesar.devapp20211.models.Fruit
+import java.lang.NumberFormatException
 
 class DescriptionFruitsActivity : AppCompatActivity() {
 
@@ -24,7 +26,11 @@ class DescriptionFruitsActivity : AppCompatActivity() {
         super.onResume()
         fruit = intent.getParcelableExtra(MainActivity.EXTRA_FRUIT)
         fruit?.let {
-            binding.imgvFruitImage.setImageDrawable(MainActivity.fruitsImages?.getDrawable(it.image))
+            try {
+                binding.imgvFruitImage.setImageDrawable(MainActivity.fruitsImages?.getDrawable(it.image.toInt()))
+            } catch (e: NumberFormatException) {
+                binding.imgvFruitImage.setImageURI(Uri.parse(it.image))
+            }
             binding.tvFruiName.text = it.name
             binding.tvFruitBenefits.text = it.description
         }

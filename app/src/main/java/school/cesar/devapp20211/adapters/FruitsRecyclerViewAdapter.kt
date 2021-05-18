@@ -2,6 +2,7 @@ package school.cesar.devapp20211.adapters
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,6 +12,7 @@ import school.cesar.devapp20211.R
 import school.cesar.devapp20211.activities.MainActivity
 import school.cesar.devapp20211.databinding.RowFruitBinding
 import school.cesar.devapp20211.models.Fruit
+import java.lang.NumberFormatException
 
 class FruitsRecyclerViewAdapter (private val context: Context, private val fruits: MutableList<Fruit>, private val callback: (Fruit) -> Unit) : RecyclerView.Adapter<FruitsRecyclerViewAdapter.ViewHolder> (){
 
@@ -29,7 +31,13 @@ class FruitsRecyclerViewAdapter (private val context: Context, private val fruit
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val (name, description, image) = fruits[position]
-        holder.imgvFruit.setImageDrawable(MainActivity.fruitsImages?.getDrawable(image))
+
+        try {
+            holder.imgvFruit.setImageDrawable(MainActivity.fruitsImages?.getDrawable(image.toInt()))
+        } catch (e: NumberFormatException) {
+            holder.imgvFruit.setImageURI(Uri.parse(image))
+        }
+
         holder.tvFruitName.text = name
         holder.tvBenefitsDescription.text = description
     }
