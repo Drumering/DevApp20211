@@ -6,4 +6,5 @@
     <string name="insert_the_fruit_name">Insert the fruit name</string>
     <string name="describe_the_benefits">Describe the benefits</string>
     <string name="description_content_fruit_image">description_content_fruit_image</string>
+    <string name="save_fruit">Save Fruit</string>
 </resources>
