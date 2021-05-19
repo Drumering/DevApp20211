@@ -1,9 +1,8 @@
 package school.cesar.devapp20211.activities
 
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import school.cesar.devapp20211.R
+import com.squareup.picasso.Picasso
 import school.cesar.devapp20211.databinding.ActivityDescriptionFruitsBinding
 import school.cesar.devapp20211.models.Fruit
 import java.lang.NumberFormatException
@@ -29,7 +28,7 @@ class DescriptionFruitsActivity : AppCompatActivity() {
             try {
                 binding.imgvFruitImage.setImageDrawable(MainActivity.fruitsImages?.getDrawable(it.image.toInt()))
             } catch (e: NumberFormatException) {
-                binding.imgvFruitImage.setImageURI(Uri.parse(it.image))
+                Picasso.get().load(it.image).into(binding.imgvFruitImage)
             }
             binding.tvFruiName.text = it.name
             binding.tvFruitBenefits.text = it.description

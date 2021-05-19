@@ -1,13 +1,12 @@
 package school.cesar.devapp20211.adapters
 
 import android.content.Context
-import android.content.res.TypedArray
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import school.cesar.devapp20211.R
 import school.cesar.devapp20211.activities.MainActivity
 import school.cesar.devapp20211.databinding.RowFruitBinding
@@ -35,7 +34,7 @@ class FruitsRecyclerViewAdapter (private val context: Context, private val fruit
         try {
             holder.imgvFruit.setImageDrawable(MainActivity.fruitsImages?.getDrawable(image.toInt()))
         } catch (e: NumberFormatException) {
-            holder.imgvFruit.setImageURI(Uri.parse(image))
+            Picasso.get().load(image).into(holder.imgvFruit)
         }
 
         holder.tvFruitName.text = name

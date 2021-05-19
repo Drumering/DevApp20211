@@ -38,7 +38,7 @@
         app:hintTextColor="@color/default_cesar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_view">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_name"
@@ -50,7 +50,8 @@
             android:maxLength="30"
             android:minWidth="200dp"
             android:maxWidth="300dp"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +72,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="@string/describe_the_benefits"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:maxWidth="300dp"
             android:maxLength="148"
             android:maxLines="5"
@@ -109,5 +111,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10dp"
+        android:text="@string/tap_on_the_image_to_choose_an_image_from_your_gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

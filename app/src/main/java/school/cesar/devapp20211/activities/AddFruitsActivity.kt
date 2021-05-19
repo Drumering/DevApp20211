@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MotionEvent
-import school.cesar.devapp20211.R
 import school.cesar.devapp20211.databinding.ActivityAddFruitsBinding
 import school.cesar.devapp20211.models.Fruit
 import school.cesar.devapp20211.utils.Utils
@@ -67,7 +65,7 @@ class AddFruitsActivity : AppCompatActivity() {
     }
 
     private fun getImageFromGallery() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_CODE)
     }
