@@ -1,7 +1,10 @@
 package school.cesar.devapp20211.activities
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.squareup.picasso.Picasso
 import school.cesar.devapp20211.databinding.ActivityDescriptionFruitsBinding
 import school.cesar.devapp20211.models.Fruit
@@ -33,5 +36,12 @@ class DescriptionFruitsActivity : AppCompatActivity() {
             binding.tvFruiName.text = it.name
             binding.tvFruitBenefits.text = it.description
         }
+    }
+
+    fun onClickRemoveFruit(view: View) {
+        val removeIntent = Intent()
+        removeIntent.putExtra(MainActivity.EXTRA_FRUIT, fruit)
+        setResult(Activity.RESULT_OK, removeIntent)
+        finish()
     }
 }
