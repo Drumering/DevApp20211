@@ -9,4 +9,5 @@
     <string name="save_fruit">Save Fruit</string>
     <string name="tap_on_the_image_to_choose_an_image_from_your_gallery">Tap on the image to choose an image from your gallery</string>
     <string name="remove_fruit">Remove</string>
+    <string name="add_fruit_menu">Add</string>
 </resources>

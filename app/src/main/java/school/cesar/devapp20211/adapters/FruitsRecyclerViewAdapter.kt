@@ -12,6 +12,7 @@ import school.cesar.devapp20211.activities.MainActivity
 import school.cesar.devapp20211.databinding.RowFruitBinding
 import school.cesar.devapp20211.models.Fruit
 import java.lang.NumberFormatException
+import java.util.*
 
 class FruitsRecyclerViewAdapter (private val context: Context, private val fruits: MutableList<Fruit>, private val callback: (Fruit) -> Unit) : RecyclerView.Adapter<FruitsRecyclerViewAdapter.ViewHolder> (){
 
@@ -42,6 +43,15 @@ class FruitsRecyclerViewAdapter (private val context: Context, private val fruit
     }
 
     override fun getItemCount(): Int = fruits.size
+    fun swap(initPosition: Int, targetPosition: Int) {
+        Collections.swap(fruits, initPosition, targetPosition)
+        notifyItemMoved(initPosition, targetPosition)
+    }
+
+    fun remove(position: Int) {
+        fruits.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
     class ViewHolder (view: RowFruitBinding) : RecyclerView.ViewHolder(view.root) {
         val imgvFruit : ImageView = view.imgvFruit

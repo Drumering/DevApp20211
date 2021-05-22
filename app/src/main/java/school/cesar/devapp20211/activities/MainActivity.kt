@@ -7,10 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import school.cesar.devapp20211.R
 import school.cesar.devapp20211.adapters.FruitsRecyclerViewAdapter
 import school.cesar.devapp20211.databinding.ActivityMainBinding
+import school.cesar.devapp20211.helper.FruitItemTouchHelperCallback
 import school.cesar.devapp20211.models.Fruit
 
 class MainActivity : AppCompatActivity() {
@@ -49,7 +51,8 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerViewFruits.adapter = fruitAdapter
         binding.recyclerViewFruits.layoutManager = LinearLayoutManager(this)
 
-
+        val itemHelper = ItemTouchHelper(FruitItemTouchHelperCallback(fruitAdapter))
+        itemHelper.attachToRecyclerView(binding.recyclerViewFruits)
     }
 
     private fun onItemClickListener(fruit: Fruit) {
