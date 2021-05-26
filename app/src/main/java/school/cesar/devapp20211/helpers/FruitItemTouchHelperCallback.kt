@@ -1,4 +1,4 @@
-package school.cesar.devapp20211.helper
+package school.cesar.devapp20211.helpers
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

@@ -13,6 +13,7 @@
         tools:context=".activities.AddFruitsActivity">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -66,7 +67,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:maxLines="1"
-                android:textCursorDrawable="@null"
                 android:maxLength="30"
                 android:minWidth="200dp"
                 android:maxWidth="300dp"
@@ -80,11 +80,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="64dp"
             app:boxStrokeColor="@color/default_cesar"
             app:hintTextColor="@color/default_cesar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+            app:layout_constraintBottom_toTopOf="@id/imageView2">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_benefits"
@@ -92,13 +94,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:hint="@string/describe_the_benefits"
-                android:imeOptions="actionDone"
-                android:inputType="text"
                 android:maxWidth="300dp"
                 android:maxLength="148"
                 android:maxLines="5"
-                android:minWidth="200dp"
-                android:textCursorDrawable="@null" />
+                android:minWidth="200dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
@@ -115,23 +114,9 @@
             android:id="@+id/imageView3"
             android:layout_width="100dp"
             android:layout_height="200dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
             app:srcCompat="@drawable/vertical_fruits_placeholder" />
-
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
-            android:backgroundTint="@color/default_cesar"
-            android:text="@string/save_fruit"
-            app:layout_constraintBottom_toTopOf="@+id/imageView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
         <TextView
             android:layout_marginTop="8dp"

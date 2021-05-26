@@ -5,14 +5,13 @@ import android.content.Intent
 import android.content.res.TypedArray
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import school.cesar.devapp20211.R
 import school.cesar.devapp20211.adapters.FruitsRecyclerViewAdapter
 import school.cesar.devapp20211.databinding.ActivityMainBinding
-import school.cesar.devapp20211.helper.FruitItemTouchHelperCallback
+import school.cesar.devapp20211.helpers.FruitItemTouchHelperCallback
 import school.cesar.devapp20211.models.Fruit
 
 class MainActivity : AppCompatActivity() {
@@ -28,11 +27,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
+        var fruitsImages: TypedArray? = null
         const val REQUEST_CODE = 1
         const val REQUEST_DESCRIPTION_FRUIT = 2
         const val EXTRA_FRUIT = "EXTRA_FRUIT"
         const val EXTRA_FRUIT_LIST = "EXTRA_FRUIT_LIST"
-        var fruitsImages: TypedArray? = null
+        const val EXTRA_FRUIT_UPDATE = "EXTRA_FRUIT_UPDATE"
+        const val EXTRA_FRUIT_POSITION = "EXTRA_FRUIT_POSITION"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     private fun onItemClickListener(fruit: Fruit) {
         val fruitDesc = Intent(this, DescriptionFruitsActivity::class.java)
         fruitDesc.putExtra(EXTRA_FRUIT, fruit)
+        fruitDesc.putExtra(EXTRA_FRUIT_POSITION, fruits.indexOf(fruit))
         startActivityForResult(fruitDesc, REQUEST_DESCRIPTION_FRUIT)
     }
 
@@ -77,10 +79,16 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (requestCode == REQUEST_DESCRIPTION_FRUIT) {
-                data?.getParcelableExtra<Fruit>(EXTRA_FRUIT)?.let {
-                    val position = fruits.indexOf(it)
-                    fruits.remove(it)
-                    fruitAdapter.notifyItemRemoved(position)
+                val toUpdate : Boolean = data?.getBooleanExtra(EXTRA_FRUIT_UPDATE, false) == true
+                val position = data?.getIntExtra(EXTRA_FRUIT_POSITION, -1)
+                data?.getParcelableExtra<Fruit>(EXTRA_FRUIT)?.let { fruit ->
+                    if (toUpdate) {
+                        fruits[position!!] = fruit
+                        fruitAdapter.notifyItemChanged(position)
+                    } else {
+                        fruits.remove(fruit)
+                        fruitAdapter.notifyItemRemoved(position!!)
+                    }
                 }
             }
         }

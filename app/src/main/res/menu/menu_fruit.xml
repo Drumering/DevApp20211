@@ -7,4 +7,9 @@
         android:icon="@drawable/ic_done"
         app:showAsAction="always"
         android:title="@string/add_fruit_menu" />
+    <item
+        android:id="@+id/menu_remove_fruit"
+        android:icon="@drawable/ic_remove_fruit"
+        app:showAsAction="ifRoom"
+        android:title="@string/remove_fruit_menu"/>
 </menu>

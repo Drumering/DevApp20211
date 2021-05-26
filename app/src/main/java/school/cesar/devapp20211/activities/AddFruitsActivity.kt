@@ -2,25 +2,20 @@ package school.cesar.devapp20211.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BlendMode
 import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
-import android.view.Window
-import androidx.appcompat.content.res.AppCompatResources
+import android.widget.Toast
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.view.contains
+import com.squareup.picasso.Picasso
 import school.cesar.devapp20211.R
 import school.cesar.devapp20211.databinding.ActivityAddFruitsBinding
 import school.cesar.devapp20211.models.Fruit
 import school.cesar.devapp20211.utils.Utils
+import java.lang.NumberFormatException
 
 class AddFruitsActivity : AppCompatActivity() {
 
@@ -29,7 +24,7 @@ class AddFruitsActivity : AppCompatActivity() {
     */
     private lateinit var binding : ActivityAddFruitsBinding
     private lateinit var fruit : Fruit
-    private lateinit var uri : String
+    private var uri = ""
 
     companion object {
         const val REQUEST_CODE = 3
@@ -41,13 +36,28 @@ class AddFruitsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupToolbar()
+
+        getExtras()
+    }
+
+    private fun getExtras() {
+        intent.getParcelableExtra<Fruit>(MainActivity.EXTRA_FRUIT)?.let {
+            fruit = it
+            uri = it.image
+
+            binding.etName.setText(it.name)
+            binding.etBenefits.setText(it.description)
+
+            try {
+                binding.imgvAddFruitImage.setImageDrawable(MainActivity.fruitsImages?.getDrawable(it.image.toInt()))
+            } catch (e: NumberFormatException) {
+                Picasso.get().load(it.image).into(binding.imgvAddFruitImage)
+            }
+        }
     }
 
     private fun setupToolbar() {
-        val wrappedDrawable = AppCompatResources.getDrawable(this, R.drawable.ic_arrow_back)?.apply {
-            DrawableCompat.setTint(this, Color.WHITE)
-        }
-        binding.toolbar.navigationIcon = wrappedDrawable
+        binding.toolbar.navigationIcon = Utils.wrappedDrawable(this)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -59,20 +69,12 @@ class AddFruitsActivity : AppCompatActivity() {
         binding.imgvAddFruitImage.setOnClickListener {
             getImageFromGallery()
         }
-
-        binding.btnSave.setOnClickListener {
-            val returnIntent = Intent()
-            fruit = Fruit(binding.etName.text.toString(), binding.etBenefits.text.toString(), uri)
-            returnIntent.putExtra(MainActivity.EXTRA_FRUIT, fruit)
-            setResult(Activity.RESULT_OK, returnIntent)
-            finish()
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
-            binding.imgvAddFruitImage.setImageURI(data?.data)
+            Picasso.get().load(data?.data).into(binding.imgvAddFruitImage)
             uri = data?.data.toString()
         }
     }
@@ -95,10 +97,26 @@ class AddFruitsActivity : AppCompatActivity() {
         startActivityForResult(intent, REQUEST_CODE)
     }
 
+    private fun isValidFruit(fruit: Fruit) = when {
+        fruit.name.isNotEmpty() && fruit.description.isNotEmpty() && fruit.image.isNotEmpty() -> true
+        fruit.name.isEmpty() -> {
+            Toast.makeText(this, "Please, fill the fruit name", Toast.LENGTH_SHORT).show()
+            false }
+        fruit.description.isEmpty() -> {
+            Toast.makeText(this, "Please, fill the fruit benefits", Toast.LENGTH_SHORT).show()
+            false
+        }
+        fruit.image.isEmpty() -> {
+            Toast.makeText(this, "Please, tap on the image to choose one", Toast.LENGTH_SHORT).show()
+            false
+        } else -> false
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_add_fruit, menu)
+        menuInflater.inflate(R.menu.menu_fruit, menu)
 
         menu?.findItem(R.id.menu_add_fruit)?.icon?.let { DrawableCompat.setTint(it, Color.WHITE) }
+        menu?.findItem(R.id.menu_remove_fruit)?.icon?.let { DrawableCompat.setTint(it, Color.WHITE) }
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -108,8 +126,22 @@ class AddFruitsActivity : AppCompatActivity() {
             finish()
             true
         }
-        else ->  {
-            super.onOptionsItemSelected(item)
+
+        R.id.menu_add_fruit -> {
+            fruit = Fruit(binding.etName.text.toString(), binding.etBenefits.text.toString(), uri)
+
+            if (isValidFruit(fruit)) {
+                val returnIntent = Intent()
+                returnIntent.putExtra(MainActivity.EXTRA_FRUIT, fruit)
+                setResult(Activity.RESULT_OK, returnIntent)
+                finish()
+            }
+            true
         }
+
+        R.id.menu_remove_fruit -> {
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
     }
 }
