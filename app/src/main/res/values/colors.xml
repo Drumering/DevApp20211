@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="default_cesar">#fc8403</color>
+    <color name="grey_transparent_50">#50606060</color>
 </resources>

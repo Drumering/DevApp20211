@@ -1,6 +1,8 @@
 package school.cesar.devapp20211.activities
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +10,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.graphics.drawable.DrawableCompat
 import com.squareup.picasso.Picasso
@@ -25,6 +29,7 @@ class AddFruitsActivity : AppCompatActivity() {
     private lateinit var binding : ActivityAddFruitsBinding
     private lateinit var fruit : Fruit
     private var uri = ""
+    private var toUpdate : Boolean = false
 
     companion object {
         const val REQUEST_CODE = 3
@@ -42,6 +47,7 @@ class AddFruitsActivity : AppCompatActivity() {
 
     private fun getExtras() {
         intent.getParcelableExtra<Fruit>(MainActivity.EXTRA_FRUIT)?.let {
+            toUpdate = true
             fruit = it
             uri = it.image
 
@@ -109,14 +115,46 @@ class AddFruitsActivity : AppCompatActivity() {
         fruit.image.isEmpty() -> {
             Toast.makeText(this, "Please, tap on the image to choose one", Toast.LENGTH_SHORT).show()
             false
-        } else -> false
+        }
+        else -> false
+    }
+
+    private fun verifyDuplicatedFruit(fruit: Fruit, context: Context) : Boolean {
+        var isDuplicated = false
+        MainActivity.fruits.forEach {
+            if (it.name == fruit.name) {
+                isDuplicated = true
+            }
+        }
+
+        if (isDuplicated) {
+            val view = layoutInflater.inflate(R.layout.dialog_custom_warning_duplicated, null)
+            val builder : AlertDialog.Builder = AlertDialog.Builder(context, R.style.Theme_DevApp20211_CustomWarningDialog)
+
+            builder.apply {
+                setView(view)
+                setCancelable(true)
+            }
+            val dialog = builder.create()
+
+            view.findViewById<Button>(R.id.dialog_warning_btn).setOnClickListener {
+                dialog.dismiss()
+            }
+
+            view.findViewById<TextView>(R.id.dialog_warning_title).text = getString(R.string.warning_default_title)
+            view.findViewById<TextView>(R.id.dialog_warning_description).text = getString(R.string.warning_description_duplicated)
+
+            dialog.show()
+        }
+
+        return isDuplicated
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_fruit, menu)
 
         menu?.findItem(R.id.menu_add_fruit)?.icon?.let { DrawableCompat.setTint(it, Color.WHITE) }
-        menu?.findItem(R.id.menu_remove_fruit)?.icon?.let { DrawableCompat.setTint(it, Color.WHITE) }
+        menu?.findItem(R.id.menu_cancel_operation)?.icon?.let { DrawableCompat.setTint(it, Color.WHITE) }
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -130,18 +168,29 @@ class AddFruitsActivity : AppCompatActivity() {
         R.id.menu_add_fruit -> {
             fruit = Fruit(binding.etName.text.toString(), binding.etBenefits.text.toString(), uri)
 
-            if (isValidFruit(fruit)) {
-                val returnIntent = Intent()
-                returnIntent.putExtra(MainActivity.EXTRA_FRUIT, fruit)
-                setResult(Activity.RESULT_OK, returnIntent)
-                finish()
+            if (toUpdate) {
+                if (isValidFruit(fruit)) {
+                    returnWithSetResult()
+                }
+            } else {
+                if (isValidFruit(fruit) && !verifyDuplicatedFruit(fruit, this)) {
+                    returnWithSetResult()
+                }
             }
             true
         }
 
-        R.id.menu_remove_fruit -> {
+        R.id.menu_cancel_operation -> {
+            finish()
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun returnWithSetResult() {
+        val returnIntent = Intent()
+        returnIntent.putExtra(MainActivity.EXTRA_FRUIT, fruit)
+        setResult(RESULT_OK, returnIntent)
+        finish()
     }
 }

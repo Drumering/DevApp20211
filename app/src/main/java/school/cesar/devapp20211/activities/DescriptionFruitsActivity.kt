@@ -1,12 +1,15 @@
 package school.cesar.devapp20211.activities
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.TextView
 import androidx.core.graphics.drawable.DrawableCompat
 import com.squareup.picasso.Picasso
 import school.cesar.devapp20211.R
@@ -99,14 +102,42 @@ class DescriptionFruitsActivity : AppCompatActivity() {
         }
 
         R.id.menu_remove_fruit_from_description -> {
-            val removeIntent = Intent()
-            removeIntent.putExtra(MainActivity.EXTRA_FRUIT, fruit)
-            removeIntent.putExtra(MainActivity.EXTRA_FRUIT_POSITION, position)
-            setResult(Activity.RESULT_OK, removeIntent)
-            finish()
+
+            val view = layoutInflater.inflate(R.layout.dialog_custom_warning_remove, null)
+            val builder : AlertDialog.Builder = AlertDialog.Builder(this, R.style.Theme_DevApp20211_CustomWarningDialog)
+
+            builder.apply {
+                setView(view)
+                setCancelable(true)
+            }
+            val dialog = builder.create()
+
+            view.findViewById<Button>(R.id.dialog_warning_btn_remove).setOnClickListener {
+                val removeIntent = Intent()
+                removeIntent.putExtra(MainActivity.EXTRA_FRUIT, fruit)
+                removeIntent.putExtra(MainActivity.EXTRA_FRUIT_POSITION, position)
+                setResult(Activity.RESULT_OK, removeIntent)
+                dialog.dismiss()
+                finish()
+            }
+
+            view.findViewById<Button>(R.id.dialog_warning_btn_cancel).setOnClickListener {
+                dialog.dismiss()
+            }
+
+            view.findViewById<TextView>(R.id.dialog_warning_remove_title).text = getString(R.string.warning_default_title)
+            view.findViewById<TextView>(R.id.dialog_warning_remove_description).text = getString(R.string.warning_description_remove)
+
+            dialog.show()
+
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    interface OnClickListener {
+        fun onRemoveClick()
+        fun onCancelClick()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

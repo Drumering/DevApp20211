@@ -17,11 +17,6 @@ import school.cesar.devapp20211.models.Fruit
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    private var fruits = mutableListOf(
-        Fruit("Banana", "Bananas Contain Many Important Nutrients, Contain Nutrients That Moderate Blood Sugar Levels and etc.", "0"),
-        Fruit("Apple", "Apples May Be Good for Weight Loss, apples May Be Good for Weight Loss, and they’re Linked to a Lower Risk of Diabetes", "1"),
-        Fruit("Orange", "The vitamin C in oranges helps your body in lots of ways: protects your cells from damage, helps your body make collagen and etc.", "2")
-    )
     private val fruitAdapter by lazy {
         FruitsRecyclerViewAdapter(this, fruits, this::onItemClickListener)
     }
@@ -34,6 +29,13 @@ class MainActivity : AppCompatActivity() {
         const val EXTRA_FRUIT_LIST = "EXTRA_FRUIT_LIST"
         const val EXTRA_FRUIT_UPDATE = "EXTRA_FRUIT_UPDATE"
         const val EXTRA_FRUIT_POSITION = "EXTRA_FRUIT_POSITION"
+
+        var fruits = mutableListOf(
+            Fruit("Banana", "Bananas Contain Many Important Nutrients, Contain Nutrients That Moderate Blood Sugar Levels and etc.", "0"),
+            Fruit("Apple", "Apples May Be Good for Weight Loss, apples May Be Good for Weight Loss, and they’re Linked to a Lower Risk of Diabetes", "1"),
+            Fruit("Orange", "The vitamin C in oranges helps your body in lots of ways: protects your cells from damage, helps your body make collagen and etc.", "2")
+        )
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -12,4 +12,11 @@
     <string name="add_fruit_menu">Add</string>
     <string name="remove_fruit_menu">Remove</string>
     <string name="edit_fruit_menu">Edit</string>
+    <string name="warning_title">warning title</string>
+    <string name="warning_description_duplicated">Please, your fruit name already exists on the list. Consider create a new.</string>
+    <string name="warning_description_remove">Do you really want to remove this item from the list?</string>
+    <string name="warning_button_title">Exit</string>
+    <string name="warning_default_title">Warning!</string>
+    <string name="dialog_btn_title_cancel">Cancel</string>
+    <string name="dialog_btn_title_remove">Remove</string>
 </resources>
