@@ -135,11 +135,6 @@ class DescriptionFruitsActivity : AppCompatActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
-    interface OnClickListener {
-        fun onRemoveClick()
-        fun onCancelClick()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_EDIT_FRUIT) {
             data?.getParcelableExtra<Fruit>(MainActivity.EXTRA_FRUIT)?.let {

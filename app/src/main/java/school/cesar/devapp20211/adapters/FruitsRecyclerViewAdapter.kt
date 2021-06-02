@@ -1,8 +1,12 @@
 package school.cesar.devapp20211.adapters
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +18,7 @@ import school.cesar.devapp20211.models.Fruit
 import java.lang.NumberFormatException
 import java.util.*
 
-class FruitsRecyclerViewAdapter (private val context: Context, private val fruits: MutableList<Fruit>, private val callback: (Fruit) -> Unit) : RecyclerView.Adapter<FruitsRecyclerViewAdapter.ViewHolder> (){
+class FruitsRecyclerViewAdapter (private val context: Context, private val fruits: MutableList<Fruit>, private val callback: (Fruit) -> Unit, private val confirmRemoveItemListener: (Int) -> Unit) : RecyclerView.Adapter<FruitsRecyclerViewAdapter.ViewHolder> (){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_fruit, parent, false)
@@ -43,14 +47,14 @@ class FruitsRecyclerViewAdapter (private val context: Context, private val fruit
     }
 
     override fun getItemCount(): Int = fruits.size
+
     fun swap(initPosition: Int, targetPosition: Int) {
         Collections.swap(fruits, initPosition, targetPosition)
         notifyItemMoved(initPosition, targetPosition)
     }
 
     fun remove(position: Int) {
-        fruits.removeAt(position)
-        notifyItemRemoved(position)
+        confirmRemoveItemListener(position)
     }
 
     class ViewHolder (view: RowFruitBinding) : RecyclerView.ViewHolder(view.root) {

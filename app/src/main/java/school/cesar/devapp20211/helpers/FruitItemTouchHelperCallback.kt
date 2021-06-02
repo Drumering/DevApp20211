@@ -2,6 +2,7 @@ package school.cesar.devapp20211.helpers
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import school.cesar.devapp20211.activities.MainActivity
 import school.cesar.devapp20211.adapters.FruitsRecyclerViewAdapter
 
 class FruitItemTouchHelperCallback (private val fruitsRecyclerViewAdapter: FruitsRecyclerViewAdapter) : ItemTouchHelper.Callback() {
@@ -10,7 +11,7 @@ class FruitItemTouchHelperCallback (private val fruitsRecyclerViewAdapter: Fruit
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder
     ): Int {
-        val drag = ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        val drag = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         val swipe = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         return makeMovementFlags(drag, swipe)
     }

@@ -1,11 +1,14 @@
 package school.cesar.devapp20211.activities
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.TypedArray
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import school.cesar.devapp20211.R
@@ -18,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private val fruitAdapter by lazy {
-        FruitsRecyclerViewAdapter(this, fruits, this::onItemClickListener)
+        FruitsRecyclerViewAdapter(this, fruits, this::onItemClickListener, this::confirmRemoveFruit)
     }
 
     companion object {
@@ -68,6 +71,33 @@ class MainActivity : AppCompatActivity() {
     fun onClickAddFruits(view: View) {
         val addFruitsActivity = Intent(this, AddFruitsActivity::class.java)
         startActivityForResult(addFruitsActivity, REQUEST_CODE)
+    }
+
+    private fun confirmRemoveFruit(position: Int) {
+        val view = layoutInflater.inflate(R.layout.dialog_custom_warning_remove, null)
+        val builder : AlertDialog.Builder = AlertDialog.Builder(this, R.style.Theme_DevApp20211_CustomWarningDialog)
+
+        builder.apply {
+            setView(view)
+            setCancelable(true)
+        }
+        val dialog = builder.create()
+
+        view.findViewById<Button>(R.id.dialog_warning_btn_remove).setOnClickListener {
+            fruits.removeAt(position)
+            fruitAdapter.notifyItemRemoved(position)
+            dialog.dismiss()
+        }
+
+        view.findViewById<Button>(R.id.dialog_warning_btn_cancel).setOnClickListener {
+            fruitAdapter.notifyItemRangeChanged(position, fruitAdapter.itemCount)
+            dialog.dismiss()
+        }
+
+        view.findViewById<TextView>(R.id.dialog_warning_remove_title).text = getString(R.string.warning_default_title)
+        view.findViewById<TextView>(R.id.dialog_warning_remove_description).text = getString(R.string.warning_description_remove)
+
+        dialog.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
