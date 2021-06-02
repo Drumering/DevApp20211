@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DevApp20211</string>
+    <string name="search_hint">Buscar</string>
+    <string name="placeholder_benefits_description">Descrição dos benefícios da fruta</string>
+    <string name="placeholder_fruit_name">Nome da fruta</string>
+    <string name="insert_the_fruit_name">Insira o nome da fruta</string>
+    <string name="describe_the_benefits">Descreve os benefícios</string>
+    <string name="description_content_fruit_image">description_content_fruit_image</string>
+    <string name="save_fruit">Salvar fruta</string>
+    <string name="tap_on_the_image_to_choose_an_image_from_your_gallery">Toque na imagem para selecionar uma imagem da sua galeria</string>
+    <string name="remove_fruit">Remover</string>
+    <string name="add_fruit_menu">Adicionar</string>
+    <string name="remove_fruit_menu">Remover</string>
+    <string name="edit_fruit_menu">Editar</string>
+    <string name="warning_title">Título de aviso</string>
+    <string name="warning_description_duplicated">Por favor, esta fruta já existe. Considere criar uma nova.</string>
+    <string name="warning_description_remove">Você realmente deseja remover este item da lista?</string>
+    <string name="warning_button_title">Sair</string>
+    <string name="warning_default_title">Aviso!</string>
+    <string name="dialog_btn_title_cancel">Calcelar</string>
+    <string name="dialog_btn_title_remove">Remover</string>
+</resources>
