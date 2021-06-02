@@ -122,7 +122,7 @@ class AddFruitsActivity : AppCompatActivity() {
     private fun verifyDuplicatedFruit(fruit: Fruit, context: Context) : Boolean {
         var isDuplicated = false
         MainActivity.fruits.forEach {
-            if (it.name == fruit.name) {
+            if (it.name.lowercase() == fruit.name.lowercase()) {
                 isDuplicated = true
             }
         }

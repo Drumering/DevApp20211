@@ -5,7 +5,7 @@
     <string name="placeholder_benefits_description">Descrição dos benefícios da fruta</string>
     <string name="placeholder_fruit_name">Nome da fruta</string>
     <string name="insert_the_fruit_name">Insira o nome da fruta</string>
-    <string name="describe_the_benefits">Descreve os benefícios</string>
+    <string name="describe_the_benefits">Descreva os benefícios</string>
     <string name="description_content_fruit_image">description_content_fruit_image</string>
     <string name="save_fruit">Salvar fruta</string>
     <string name="tap_on_the_image_to_choose_an_image_from_your_gallery">Toque na imagem para selecionar uma imagem da sua galeria</string>
